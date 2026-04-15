@@ -18,7 +18,7 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners(AuditingEntityListener.class)
-
+@Inheritance(strategy = InheritanceType.JOINED)
 public class TouristSpot {
 
     @EqualsAndHashCode.Include
