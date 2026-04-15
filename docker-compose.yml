@@ -1,0 +1,19 @@
+version: '3.8'
+
+name: ubajara-api
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: ubajara_postgres
+    environment:
+      POSTGRES_DB: ubajara_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
