@@ -15,7 +15,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = "photos")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners(AuditingEntityListener.class)
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -30,11 +30,11 @@ public class TouristSpot {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "adress")
-    private String adress;
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "phone")
     private String phone;
@@ -42,17 +42,19 @@ public class TouristSpot {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "web_adress")
-    private String webAdress;
+    @Column(name = "web_url")
+    private String webUrl;
 
-    @Column(name = "instagram_adress")
-    private String instagramAdress;
+    @Column(name = "instagram_url")
+    private String instagramUrl;
 
     @Column(name = "active")
     private Boolean active;
 
     @CreatedDate
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    @OneToMany(mappedBy = "touristSpot", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Photo> photos;
 }
