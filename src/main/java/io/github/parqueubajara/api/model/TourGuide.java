@@ -5,13 +5,12 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tb_event")
+@Table(name = "tb_tour_guide")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,8 +18,7 @@ import java.util.UUID;
 @ToString(exclude = "photos")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners(AuditingEntityListener.class)
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Event {
+public class TourGuide {
 
     @EqualsAndHashCode.Include
     @Id
@@ -31,22 +29,19 @@ public class Event {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "decription")
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "languages")
+    private List<String> languages;
+
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "start_date")
-    private LocalDate startDate;
-
-    @Column(name = "end_date")
-    private LocalDate endDate;
-
-    @Column(name = "location")
-    private String location;
-
-    @Column(name = "registration_url")
-    private String registrationUrl;
-
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tourGuide", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Photo> photos;
 
     @Column(name = "active")
@@ -55,5 +50,4 @@ public class Event {
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-
 }
