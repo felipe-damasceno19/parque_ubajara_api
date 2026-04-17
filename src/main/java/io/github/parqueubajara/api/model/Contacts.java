@@ -2,10 +2,7 @@ package io.github.parqueubajara.api.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -15,9 +12,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@EntityListeners(AuditingEntityListener.class)
-public class Contacts {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+public class Contacts extends BaseEntity{
 
     @EqualsAndHashCode.Include
     @Id
@@ -37,7 +33,5 @@ public class Contacts {
     @Column(name = "description")
     private String description;
 
-    @CreatedDate
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+
 }

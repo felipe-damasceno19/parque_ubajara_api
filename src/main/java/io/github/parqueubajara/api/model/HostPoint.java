@@ -1,8 +1,7 @@
 package io.github.parqueubajara.api.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import io.github.parqueubajara.api.model.enums.HostType;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -24,4 +23,8 @@ public class HostPoint extends TouristSpot{
 
     @Column(name = "booking_adress")
     private String bookingAdress;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "host_type", nullable = false)
+    private HostType hostType;
 }

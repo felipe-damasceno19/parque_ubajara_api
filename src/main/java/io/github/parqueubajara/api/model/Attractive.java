@@ -1,8 +1,8 @@
 package io.github.parqueubajara.api.model;
 
+import io.github.parqueubajara.api.model.enums.AttractionType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 
@@ -26,5 +26,9 @@ public class Attractive extends TouristSpot {
 
     @Column(name = "average_visit_duration")
     private Integer averageVisitDuration;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "attraction_type", nullable = false)
+    private AttractionType category;
 
 }

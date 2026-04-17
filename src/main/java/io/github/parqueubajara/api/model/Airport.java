@@ -2,10 +2,7 @@ package io.github.parqueubajara.api.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -15,9 +12,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@EntityListeners(AuditingEntityListener.class)
-public class Airport {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+public class Airport extends BaseEntity {
 
     @EqualsAndHashCode.Include
     @Id
@@ -43,7 +39,4 @@ public class Airport {
     @Column(name = "route_description")
     private String routeDescription;
 
-    @CreatedDate
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
 }
