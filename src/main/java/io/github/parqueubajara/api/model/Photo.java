@@ -11,7 +11,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "touristSpot")
+@ToString(exclude = {"touristSpot", "event", "tourGuide"})
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Photo extends BaseEntity {
 
@@ -30,5 +30,13 @@ public class Photo extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tourist_spot_id")
     private TouristSpot touristSpot;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_id")
+    private Event event;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tour_guide_id")
+    private TourGuide tourGuide;
 
 }

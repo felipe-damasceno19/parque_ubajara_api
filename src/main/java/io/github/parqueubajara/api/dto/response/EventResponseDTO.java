@@ -1,22 +1,22 @@
 package io.github.parqueubajara.api.dto.response;
 
-import jakarta.validation.constraints.Email;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public record TouristSpotResponseDTO(
+public record EventResponseDTO(
         UUID id,
         String name,
         String description,
-        String address,
-        String phone,
-        String email,
-        String siteUrl,
-        String instagramUrl,
+        LocalDateTime startDateTime,
+        LocalDateTime endDateTime,
+        String location,
+        String registrationUrl,
         Boolean active,
         List<PhotoResponseDTO> photos
 ) {

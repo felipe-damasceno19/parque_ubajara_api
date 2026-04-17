@@ -6,26 +6,20 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record TouristSpotRequestDTO(
-        @NotBlank(message = "O nome é obrigatório")
-        @Size(max = 100)
-        String name,
+        @NotBlank(message = "O nome é obrigatório") @Size(max = 100) String name,
 
-        @NotBlank(message = "A descrição é obrigatória")
-        String description,
+        @NotBlank(message = "A descrição é obrigatória") String description,
 
-        @NotBlank(message = "O endereço é obrigatório")
-        String address,
+        @NotBlank(message = "O endereço é obrigatório") String address,
 
         String phone,
 
-        @Email(message = "E-mail inválido")
-        String email,
+        @Email(message = "E-mail inválido") String email,
 
         String siteUrl,
         String instagramUrl,
 
-        @NotNull(message = "O status ativo deve ser informado")
-        Boolean active
+        @NotNull(message = "O status ativo deve ser informado") Boolean active
 
 ) {
 }
