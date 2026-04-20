@@ -12,12 +12,12 @@ public record RestaurantResponseDTO(
         String address,
         String phone,
         String email,
-        String siteUrl,
+        String webUrl,
         String instagramUrl,
         Boolean active,
         String cuisineType,
         String openingHours,
-        BigDecimal averagePrice,
+        BigDecimal avgPrice,
         Boolean acceptsReservation
 ) {
 }

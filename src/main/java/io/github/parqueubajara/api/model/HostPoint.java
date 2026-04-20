@@ -21,8 +21,8 @@ public class HostPoint extends TouristSpot{
     @Column(name = "avg_price")
     private BigDecimal avgPrice;
 
-    @Column(name = "booking_adress")
-    private String bookingAdress;
+    @Column(name = "booking_url")
+    private String bookingUrl;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "host_type", nullable = false)

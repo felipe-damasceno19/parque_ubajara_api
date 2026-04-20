@@ -17,7 +17,7 @@ public record HostPointRequestDTO(
 
         @Email(message = "E-mail inválido") String email,
 
-        String siteUrl,
+        String webUrl,
         String instagramUrl,
 
         @NotNull(message = "O status ativo deve ser informado") Boolean active,
@@ -25,9 +25,9 @@ public record HostPointRequestDTO(
         //Atributos da classe
         @NotNull(message = "Tipo de hospedagem obrigatório!") HostType hostType,
 
-        Integer numberOfRooms,
+        Integer numOfRooms,
 
-        @Positive(message = "O valor informado deve ser positivo") BigDecimal averagePrice,
+        @Positive(message = "O valor informado deve ser positivo") BigDecimal avgPrice,
 
         String bookingUrl
 ) {

@@ -13,12 +13,12 @@ public record HostPointResponseDTO(
         String address,
         String phone,
         String email,
-        String siteUrl,
+        String webUrl,
         String instagramUrl,
         Boolean active,
         HostType hostType,
-        Integer numberOfRooms,
-        BigDecimal averagePrice,
+        Integer numOfRooms,
+        BigDecimal avgPrice,
         String bookingUrl
 ) {
 }
