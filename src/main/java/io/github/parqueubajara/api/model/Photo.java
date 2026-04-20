@@ -27,6 +27,12 @@ public class Photo extends BaseEntity {
     @Column(name = "storage_key")
     private String storageKey;
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "display_order")
+    private Integer displayOrder;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tourist_spot_id")
     private TouristSpot touristSpot;

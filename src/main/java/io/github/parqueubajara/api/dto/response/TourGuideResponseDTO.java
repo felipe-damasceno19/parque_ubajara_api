@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public record TourGuideResponseDTO(
         UUID id,
-        String tourGuide,
+        String name,
         String phone,
         String email,
         List<String> languages,

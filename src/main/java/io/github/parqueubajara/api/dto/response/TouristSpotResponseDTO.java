@@ -15,7 +15,7 @@ public record TouristSpotResponseDTO(
         String address,
         String phone,
         String email,
-        String siteUrl,
+        String webUrl,
         String instagramUrl,
         Boolean active,
         List<PhotoResponseDTO> photos

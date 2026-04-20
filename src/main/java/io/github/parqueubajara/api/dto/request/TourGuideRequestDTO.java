@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 public record TourGuideRequestDTO(
-        @NotBlank(message = "O nome do guia deve ser informado") String tourGuide,
+        @NotBlank(message = "O nome do guia deve ser informado") String name,
 
         @NotBlank(message = "O telefone deve ser informado") String phone,
 
