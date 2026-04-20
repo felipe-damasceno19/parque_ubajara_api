@@ -6,11 +6,13 @@ import io.github.parqueubajara.api.dto.response.RestaurantResponseDTO;
 import io.github.parqueubajara.api.dto.update.RestaurantUpdateDTO;
 import io.github.parqueubajara.api.model.Restaurant;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(config = CentralMapperConfig.class)
 public interface RestaurantMapper {
 
+    @Mapping(target = "photos", ignore = true)
     Restaurant toEntity(RestaurantRequestDTO requestDTO);
     RestaurantResponseDTO toResponseDTO(Restaurant entity);
 
