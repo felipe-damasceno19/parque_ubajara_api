@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class Attractive extends TouristSpot {
+public class Attraction extends TouristSpot {
 
     @Column(name = "opening_hours")
     private String openingHours;

@@ -1,6 +1,6 @@
 package io.github.parqueubajara.api.repository;
 
-import io.github.parqueubajara.api.model.Attractive;
+import io.github.parqueubajara.api.model.Attraction;
 import io.github.parqueubajara.api.model.enums.AttractionType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface AttractiveRepository extends JpaRepository<Attractive, UUID> {
+public interface AttractionRepository extends JpaRepository<Attraction, UUID> {
 
-    Attractive findByCategory(AttractionType category);
+    Attraction findByCategory(AttractionType category);
 }

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
-public record AttractiveRequestDTO(
+public record AttractionRequestDTO(
         //Atributos da superclasse
         @NotBlank(message = "O nome é obrigatório") @Size(max = 100) String name,
         @NotBlank(message = "A descrição é obrigatória") String description,

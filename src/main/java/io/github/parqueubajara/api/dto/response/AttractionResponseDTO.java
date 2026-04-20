@@ -5,7 +5,7 @@ import io.github.parqueubajara.api.model.enums.AttractionType;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-public record AttractiveResponseDTO(
+public record AttractionResponseDTO(
         UUID id,
         String name,
         String description,
