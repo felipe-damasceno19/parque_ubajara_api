@@ -16,6 +16,5 @@ public interface AttractionMapper {
     Attraction toEntity(AttractionRequestDTO requestDTO);
     AttractionResponseDTO toResponseDTO(Attraction entity);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromDto(AttractionUpdateDTO updateDTO, @MappingTarget Attraction entity);
 }
