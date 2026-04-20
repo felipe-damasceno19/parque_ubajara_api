@@ -1,10 +1,6 @@
 package io.github.parqueubajara.api.dto.response;
 
 import io.github.parqueubajara.api.model.enums.AttractionType;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -16,7 +12,7 @@ public record AttractiveResponseDTO(
         String address,
         String phone,
         String email,
-        String siteUrl,
+        String webUrl,
         String instagramUrl,
         Boolean active,
         String openingHours,
