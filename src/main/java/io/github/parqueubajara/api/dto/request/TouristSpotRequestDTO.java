@@ -16,7 +16,7 @@ public record TouristSpotRequestDTO(
 
         @Email(message = "E-mail inválido") String email,
 
-        String siteUrl,
+        String webUrl,
         String instagramUrl,
 
         @NotNull(message = "O status ativo deve ser informado") Boolean active
