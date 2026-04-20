@@ -1,5 +1,6 @@
 package io.github.parqueubajara.api.mapper;
 
+import io.github.parqueubajara.api.config.CentralMapperConfig;
 import io.github.parqueubajara.api.dto.request.EventRequestDTO;
 import io.github.parqueubajara.api.dto.response.EventResponseDTO;
 import io.github.parqueubajara.api.model.Event;
@@ -8,7 +9,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 // Adicionamos o "uses" para ele enxergar como converter as fotos
-@Mapper(componentModel = "spring", uses = { PhotoMapper.class })
+@Mapper(config = CentralMapperConfig.class, uses = { PhotoMapper.class })
 public interface EventMapper {
 
     @Mapping(source = "startDateTime", target = "startDate")

@@ -15,5 +15,7 @@ public interface TouristSpotMapper {
     TouristSpotResponseDTO toResponseDTO(TouristSpot entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "photos", ignore = true)
     void updateEntityFromDto(TouristSpotUpdateDTO dto, @MappingTarget TouristSpot entity);
 }

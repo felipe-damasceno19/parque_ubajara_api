@@ -1,12 +1,13 @@
 package io.github.parqueubajara.api.mapper;
 
+import io.github.parqueubajara.api.config.CentralMapperConfig;
 import io.github.parqueubajara.api.dto.request.UserRequestDTO;
 import io.github.parqueubajara.api.dto.response.UserResponseDTO;
 import io.github.parqueubajara.api.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(config = CentralMapperConfig .class)
 public interface UserMapper {
 
     @Mapping(source = "role", target = "userRole")

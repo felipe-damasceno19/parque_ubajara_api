@@ -1,13 +1,21 @@
 package io.github.parqueubajara.api.mapper;
 
+import io.github.parqueubajara.api.config.CentralMapperConfig;
 import io.github.parqueubajara.api.dto.request.AttractionRequestDTO;
 import io.github.parqueubajara.api.dto.response.AttractionResponseDTO;
+import io.github.parqueubajara.api.dto.update.AttractionUpdateDTO;
 import io.github.parqueubajara.api.model.Attraction;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring")
+@Mapper(config = CentralMapperConfig.class)
 public interface AttractionMapper {
 
     Attraction toEntity(AttractionRequestDTO requestDTO);
     AttractionResponseDTO toResponseDTO(Attraction entity);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateEntityFromDto(AttractionUpdateDTO updateDTO, @MappingTarget Attraction entity);
 }
