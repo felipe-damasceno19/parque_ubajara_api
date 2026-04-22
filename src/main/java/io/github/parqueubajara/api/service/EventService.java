@@ -33,7 +33,7 @@ public class EventService {
     }
 
     @Transactional(readOnly = true)
-    public List<Event> findByCreateDateBetween(LocalDateTime start, LocalDateTime end){
+    public List<Event> findByCreatedDateBetween(LocalDateTime start, LocalDateTime end){
         return repository.findByCreatedDateBetween(start, end);
     }
 
