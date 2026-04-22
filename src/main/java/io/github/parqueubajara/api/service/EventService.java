@@ -6,6 +6,8 @@ import io.github.parqueubajara.api.model.Event;
 import io.github.parqueubajara.api.repository.EventRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,8 +34,8 @@ public class EventService {
     }
 
     @Transactional(readOnly = true)
-    public Event findByCreateDateBetween(LocalDateTime start, LocalDateTime end){
-        return repository.findByCreatedDateBetween(start, end);
+    public Page<Event> findByCreateDateBetween(LocalDateTime start, LocalDateTime end, Pageable pageable){
+        return repository.findByCreatedDateBetween(start, end, pageable);
     }
 
     @Transactional
