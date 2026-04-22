@@ -10,5 +10,5 @@ import java.util.UUID;
 @Repository
 public interface EventRepository extends JpaRepository<Event, UUID> {
 
-    Event findByCreateDateBetween(LocalDateTime start, LocalDateTime end);
+    Event findByCreatedDateBetween(LocalDateTime start, LocalDateTime end);
 }
