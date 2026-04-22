@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -32,8 +33,8 @@ public class EventService {
     }
 
     @Transactional(readOnly = true)
-    public Event findByCreateDateBetween(LocalDateTime start, LocalDateTime end){
-        return repository.findByCreateDateBetween(start, end);
+    public List<Event> findByCreateDateBetween(LocalDateTime start, LocalDateTime end){
+        return repository.findByCreatedDateBetween(start, end);
     }
 
     @Transactional
