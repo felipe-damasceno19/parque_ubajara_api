@@ -8,5 +8,5 @@ import org.mapstruct.Mapper;
 @Mapper(config = CentralMapperConfig.class)
 public interface PhotoMapper {
 
-    PhotoResponseDTO toResponse(Photo photo);
+    PhotoResponseDTO toResponseDTO(Photo photo);
 }
