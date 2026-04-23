@@ -13,6 +13,7 @@ public interface TouristSpotMapper {
     @Mapping(target = "photos", ignore = true)
     TouristSpot toEntity(TouristSpotRequestDTO requestDTO);
 
+    @Mapping(target = "id", source = "id")
     TouristSpotResponseDTO toResponseDTO(TouristSpot entity);
 
     void updateEntityFromDto(TouristSpotUpdateDTO dto, @MappingTarget TouristSpot entity);
