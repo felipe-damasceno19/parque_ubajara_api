@@ -22,6 +22,7 @@ public class PhotoService {
     private final PhotoRepository repository;
     private final S3StorageService storageService;
     private final PhotoMapper mapper;
+    private final FileValidationService validationService;
 
     @Transactional(readOnly = true)
     public Optional<Photo> findByIdOptional(UUID id){
@@ -45,6 +46,7 @@ public class PhotoService {
     @Transactional
     public PhotoResponseDTO upload(MultipartFile file, String description,
                                     Integer displayOrder) throws IOException {
+        validationService.validateImage(file);
 
         String url = storageService.upload(file);
         String storageKey = extractStorageKey(url);
