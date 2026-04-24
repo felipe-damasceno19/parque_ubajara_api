@@ -35,7 +35,7 @@ public class TouristSpot extends BaseEntity{
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "web_url")

@@ -34,17 +34,18 @@ public class HostPointService {
     }
 
     @Transactional(readOnly = true)
-    public Page<HostPoint> findAll(Pageable pageable){
+    public Page<HostPoint> findAll(Pageable pageable, HostType type){
+        if(type != null){
+            return repository.findByHostType(type, pageable);
+        }
         return repository.findAll(pageable);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<HostPoint> findByHostType(HostType type, Pageable pageable){
-        return repository.findByHostType(type, pageable);
     }
 
     @Transactional
     public HostPoint save(HostPoint hostPoint){
+        if(repository.existsByEmail(hostPoint.getEmail())){
+            throw new RuntimeException("E-mail já cadastrado no sistema!");
+        }
         return repository.save(hostPoint);
     }
 

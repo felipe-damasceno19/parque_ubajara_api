@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface HostPointRepository extends JpaRepository<HostPoint, UUID> {
 
     Page<HostPoint> findByHostType(HostType hostType, Pageable pageable);
+
+    boolean existsByEmail(String email);
 }

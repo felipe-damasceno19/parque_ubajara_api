@@ -15,7 +15,7 @@ public record HostPointRequestDTO(
 
         String phone,
 
-        @Email(message = "E-mail inválido") String email,
+        @Email(message = "E-mail inválido")  String email,
 
         String webUrl,
         String instagramUrl,
