@@ -34,13 +34,11 @@ public class AttractionService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Attraction> findAll(Pageable pageable){
+    public Page<Attraction> findAll(Pageable pageable, AttractionType category){
+        if(category != null){
+            return repository.findByCategory(category, pageable);
+        }
         return repository.findAll(pageable);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<Attraction> findByCategory(Pageable pageable, AttractionType category){
-        return repository.findByCategory(category, pageable);
     }
 
     @Transactional

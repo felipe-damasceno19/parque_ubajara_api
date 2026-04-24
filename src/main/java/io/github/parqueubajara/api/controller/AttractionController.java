@@ -35,10 +35,7 @@ public class AttractionController {
             @RequestParam(required = false) AttractionType category,
             @PageableDefault(size = 10, sort = "name")Pageable pageable){
 
-        Page<Attraction> pageEntity = (category != null)
-                ? service.findByCategory(pageable, category)
-                : service.findAll(pageable);
-
+        Page<Attraction> pageEntity = service.findAll(pageable, category);
         return ResponseEntity.ok(pageEntity.map(mapper::toResponseDTO));
     }
 
