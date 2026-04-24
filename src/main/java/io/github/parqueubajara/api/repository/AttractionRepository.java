@@ -13,4 +13,6 @@ import java.util.UUID;
 public interface AttractionRepository extends JpaRepository<Attraction, UUID> {
 
     Page<Attraction> findByCategory(AttractionType category, Pageable pageable);
+
+    boolean existsByEmail(String email);
 }

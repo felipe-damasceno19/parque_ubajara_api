@@ -39,6 +39,9 @@ public class ContactsService {
 
     @Transactional
     public Contacts save(Contacts contacts){
+        if(repository.existsByEmail(contacts.getEmail())){
+            throw new RuntimeException("E-mail já cadastrado");
+        }
         return repository.save(contacts);
     }
 

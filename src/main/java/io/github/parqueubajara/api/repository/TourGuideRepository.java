@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface TourGuideRepository extends JpaRepository<TourGuide, UUID> {
+
+    boolean existsByEmail(String email);
 }

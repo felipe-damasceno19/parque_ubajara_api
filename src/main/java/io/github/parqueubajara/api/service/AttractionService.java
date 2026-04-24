@@ -45,6 +45,9 @@ public class AttractionService {
 
     @Transactional
     public Attraction save(Attraction attraction) {
+        if(repository.existsByEmail(attraction.getEmail())){
+            throw new RuntimeException("E-mail já cadastrado");
+        }
         return repository.save(attraction);
     }
 

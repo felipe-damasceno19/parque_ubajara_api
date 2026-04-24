@@ -35,6 +35,9 @@ public class TouristSpotService {
 
     @Transactional
     public TouristSpot save(TouristSpot spot){
+        if(repository.existsByEmail(spot.getEmail())){
+            throw new RuntimeException("E-mail já cadastrado");
+        }
         return repository.save(spot);
     }
 

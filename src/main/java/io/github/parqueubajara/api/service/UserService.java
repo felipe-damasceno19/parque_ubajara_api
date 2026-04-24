@@ -44,6 +44,9 @@ public class UserService {
 
     @Transactional
     public User save(User user){
+        if(repository.existsByEmail(user.getEmail())){
+            throw new RuntimeException("E-mail já cadastrado");
+        }
         return repository.save(user);
     }
 
