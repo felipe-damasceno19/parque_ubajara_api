@@ -1,0 +1,61 @@
+package io.github.parqueubajara.api.controller;
+
+import io.github.parqueubajara.api.dto.request.RestaurantRequestDTO;
+import io.github.parqueubajara.api.dto.response.RestaurantResponseDTO;
+import io.github.parqueubajara.api.dto.update.RestaurantUpdateDTO;
+import io.github.parqueubajara.api.mapper.RestaurantMapper;
+import io.github.parqueubajara.api.model.Restaurant;
+import io.github.parqueubajara.api.service.RestaurantService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/restaurants")
+@RequiredArgsConstructor
+public class RestaurantController implements GenericController {
+
+    private final RestaurantService service;
+    private final RestaurantMapper mapper;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RestaurantResponseDTO> getById(@PathVariable UUID id){
+        Restaurant restaurant = service.findById(id);
+        return ResponseEntity.ok(mapper.toResponseDTO(restaurant));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<RestaurantResponseDTO>> getAll(@PageableDefault(size = 10)Pageable pageable){
+        Page<Restaurant> pageEntity = service.findAll(pageable);
+        return ResponseEntity.ok(pageEntity.map(mapper::toResponseDTO));
+    }
+
+    @PostMapping
+    public ResponseEntity<RestaurantResponseDTO> save(@RequestBody @Valid RestaurantRequestDTO requestDTO){
+        Restaurant restaurant = mapper.toEntity(requestDTO);
+        service.save(restaurant);
+        URI location = generateHeaderLocation(restaurant.getId());
+
+        return ResponseEntity.created(location).body(mapper.toResponseDTO(restaurant));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable UUID id, @RequestBody RestaurantUpdateDTO updateDTO){
+        service.update(id, updateDTO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+}
