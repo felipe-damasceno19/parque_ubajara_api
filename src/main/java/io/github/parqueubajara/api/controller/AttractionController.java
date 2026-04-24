@@ -14,12 +14,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/attractions")
 @RequiredArgsConstructor
-public class AttractionController {
+public class AttractionController implements GenericController{
 
     private final AttractionService service;
     private final AttractionMapper mapper;
@@ -43,7 +44,9 @@ public class AttractionController {
     public ResponseEntity<AttractionResponseDTO> save(@RequestBody AttractionRequestDTO requestDTO){
         Attraction attraction = mapper.toEntity(requestDTO);
         service.save(attraction);
-        return ResponseEntity.ok(mapper.toResponseDTO(attraction));
+        URI location = generateHeaderLocation(attraction.getId());
+
+        return ResponseEntity.created(location).body(mapper.toResponseDTO(attraction));
     }
 
     @PutMapping("/{id}")

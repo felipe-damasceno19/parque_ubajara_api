@@ -16,12 +16,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/host-points")
 @RequiredArgsConstructor
-public class HostPointController {
+public class HostPointController implements GenericController {
 
     private final HostPointService service;
     private final HostPointMapper mapper;
@@ -43,7 +44,9 @@ public class HostPointController {
     public ResponseEntity<HostPointResponseDTO> save(@RequestBody @Valid HostPointRequestDTO requestDTO){
         HostPoint hostPoint = mapper.toEntity(requestDTO);
         service.save(hostPoint);
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponseDTO(hostPoint));
+        URI location = generateHeaderLocation(hostPoint.getId());
+
+        return ResponseEntity.created(location).body(mapper.toResponseDTO(hostPoint));
     }
 
     @PutMapping("/{id}")

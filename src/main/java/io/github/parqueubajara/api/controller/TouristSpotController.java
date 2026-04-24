@@ -15,12 +15,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/tourist-spots")
 @RequiredArgsConstructor
-public class TouristSpotController {
+public class TouristSpotController implements GenericController{
 
     private final TouristSpotService service;
     private final TouristSpotMapper mapper;
@@ -44,8 +45,9 @@ public class TouristSpotController {
             @RequestBody @Valid TouristSpotRequestDTO requestDTO){
         TouristSpot spot = mapper.toEntity(requestDTO);
         service.save(spot);
-        TouristSpotResponseDTO responseDTO = mapper.toResponseDTO(spot);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+        URI location = generateHeaderLocation(spot.getId());
+
+        return ResponseEntity.created(location).body(mapper.toResponseDTO(spot));
     }
 
     @PutMapping("/{id}")
