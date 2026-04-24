@@ -1,9 +1,7 @@
 package io.github.parqueubajara.api.controller;
 
 import io.github.parqueubajara.api.dto.response.PhotoResponseDTO;
-import io.github.parqueubajara.api.mapper.PhotoMapper;
 import io.github.parqueubajara.api.service.PhotoService;
-import io.github.parqueubajara.api.service.S3StorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,12 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/photos")
+@RequestMapping("/photos")
 @RequiredArgsConstructor
 public class PhotoController {
 
