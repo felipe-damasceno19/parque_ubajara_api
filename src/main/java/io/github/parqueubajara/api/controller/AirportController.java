@@ -1,0 +1,60 @@
+package io.github.parqueubajara.api.controller;
+
+import io.github.parqueubajara.api.dto.request.AirportRequestDTO;
+import io.github.parqueubajara.api.dto.response.AirportResponseDTO;
+import io.github.parqueubajara.api.dto.update.AirportUpdateDTO;
+import io.github.parqueubajara.api.mapper.AirportMapper;
+import io.github.parqueubajara.api.model.Airport;
+import io.github.parqueubajara.api.service.AirportService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/airports")
+@RequiredArgsConstructor
+public class AirportController implements GenericController {
+
+    private final AirportService service;
+    private final AirportMapper mapper;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AirportResponseDTO> getById(@PathVariable UUID id){
+        Airport airport = service.findById(id);
+        return ResponseEntity.ok(mapper.toResponseDTO(airport));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<AirportResponseDTO>> getAll(@PageableDefault(size = 10)Pageable pageable){
+        Page<Airport> pageEntity = service.findAll(pageable);
+        return ResponseEntity.ok(pageEntity.map(mapper::toResponseDTO));
+    }
+
+    @PostMapping
+    public ResponseEntity<AirportResponseDTO> save(@RequestBody @Valid AirportRequestDTO requestDTO){
+        Airport airport = mapper.toEntity(requestDTO);
+        service.save(airport);
+        URI location = generateHeaderLocation(airport.getId());
+
+        return ResponseEntity.created(location).body(mapper.toResponseDTO(airport));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> udpdate(@PathVariable UUID id, @RequestBody AirportUpdateDTO updateDTO){
+        service.update(id, updateDTO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+}
