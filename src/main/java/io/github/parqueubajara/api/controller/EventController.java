@@ -1,0 +1,64 @@
+package io.github.parqueubajara.api.controller;
+
+import io.github.parqueubajara.api.dto.request.EventRequestDTO;
+import io.github.parqueubajara.api.dto.response.EventResponseDTO;
+import io.github.parqueubajara.api.dto.update.EventUpdateDTO;
+import io.github.parqueubajara.api.mapper.EventMapper;
+import io.github.parqueubajara.api.model.Event;
+import io.github.parqueubajara.api.service.EventService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/events")
+@RequiredArgsConstructor
+public class EventController implements GenericController{
+
+    private final EventService service;
+    private final EventMapper mapper;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EventResponseDTO> getById(@PathVariable UUID id){
+        Event event = service.findById(id);
+        return ResponseEntity.ok(mapper.toResponseDTO(event));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<EventResponseDTO>> getAll(@PageableDefault(size = 10)Pageable pageable,
+                                                         @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")LocalDateTime startDateTime,
+                                                         @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")LocalDateTime endDateTime){
+        Page<Event> pageEntity = service.findAll(pageable, startDateTime, endDateTime);
+        return ResponseEntity.ok(pageEntity.map(mapper::toResponseDTO));
+    }
+
+    @PostMapping
+    public ResponseEntity<EventResponseDTO> save(@RequestBody @Valid EventRequestDTO requestDTO){
+        Event event = mapper.toEntity(requestDTO);
+        service.save(event);
+        URI location = generateHeaderLocation(event.getId());
+
+        return ResponseEntity.created(location).body(mapper.toResponseDTO(event));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable UUID id, @RequestBody EventUpdateDTO updateDTO){
+        service.update(id, updateDTO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+}
