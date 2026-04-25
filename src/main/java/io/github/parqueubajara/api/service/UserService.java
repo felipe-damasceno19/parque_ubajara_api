@@ -33,13 +33,11 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Page<User> findAll(Pageable pageable){
+    public Page<User> findAll(Pageable pageable, String username){
+        if(username != null){
+            return repository.findByUsernameContainingIgnoreCase(username, pageable);
+        }
         return repository.findAll(pageable);
-    }
-
-    @Transactional(readOnly = true)
-    public User findByUsername(String username){
-        return repository.findByUsername(username);
     }
 
     @Transactional
