@@ -7,6 +7,7 @@ import io.github.parqueubajara.api.mapper.AttractionMapper;
 import io.github.parqueubajara.api.model.Attraction;
 import io.github.parqueubajara.api.model.enums.AttractionType;
 import io.github.parqueubajara.api.service.AttractionService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +42,7 @@ public class AttractionController implements GenericController{
     }
 
     @PostMapping
-    public ResponseEntity<AttractionResponseDTO> save(@RequestBody AttractionRequestDTO requestDTO){
+    public ResponseEntity<AttractionResponseDTO> save(@RequestBody @Valid AttractionRequestDTO requestDTO){
         Attraction attraction = mapper.toEntity(requestDTO);
         service.save(attraction);
         URI location = generateHeaderLocation(attraction.getId());
