@@ -1,4 +1,4 @@
-package io.github.parqueubajara.api.exception;
+package io.github.parqueubajara.api.handler;
 
 import io.github.parqueubajara.api.dto.response.ErrorResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
