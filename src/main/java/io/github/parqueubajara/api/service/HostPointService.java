@@ -1,11 +1,11 @@
 package io.github.parqueubajara.api.service;
 
 import io.github.parqueubajara.api.dto.update.HostPointUpdateDTO;
+import io.github.parqueubajara.api.exception.ResourceNotFoundException;
 import io.github.parqueubajara.api.mapper.HostPointMapper;
 import io.github.parqueubajara.api.model.HostPoint;
 import io.github.parqueubajara.api.model.enums.HostType;
 import io.github.parqueubajara.api.repository.HostPointRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,7 +30,7 @@ public class HostPointService {
     @Transactional(readOnly = true)
     public HostPoint findById(UUID id){
         return findByIdOptional(id)
-                .orElseThrow(() -> new EntityNotFoundException("Ponto de hospedagem de ID: "+id+" não encontrado!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Ponto de hospedagem de ID: "+id+" não encontrado!"));
     }
 
     @Transactional(readOnly = true)

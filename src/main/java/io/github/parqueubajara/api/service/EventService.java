@@ -1,10 +1,10 @@
 package io.github.parqueubajara.api.service;
 
 import io.github.parqueubajara.api.dto.update.EventUpdateDTO;
+import io.github.parqueubajara.api.exception.ResourceNotFoundException;
 import io.github.parqueubajara.api.mapper.EventMapper;
 import io.github.parqueubajara.api.model.Event;
 import io.github.parqueubajara.api.repository.EventRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,7 +30,7 @@ public class EventService {
     @Transactional(readOnly = true)
     public Event findById(UUID id){
         return findByIdOptional(id)
-                .orElseThrow(() -> new EntityNotFoundException("Evento de ID: "+ id +" não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Evento de ID: "+ id +" não encontrado"));
     }
 
     @Transactional(readOnly = true)

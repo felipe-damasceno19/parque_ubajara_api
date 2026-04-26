@@ -1,10 +1,10 @@
 package io.github.parqueubajara.api.service;
 
 import io.github.parqueubajara.api.dto.update.TouristSpotUpdateDTO;
+import io.github.parqueubajara.api.exception.ResourceNotFoundException;
 import io.github.parqueubajara.api.mapper.TouristSpotMapper;
 import io.github.parqueubajara.api.model.TouristSpot;
 import io.github.parqueubajara.api.repository.TouristSpotRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,7 +30,7 @@ public class TouristSpotService {
     @Transactional(readOnly = true)
     public TouristSpot findById(UUID id){
         return findByIdOptional(id)
-                .orElseThrow(() -> new EntityNotFoundException("Ponto turístico de ID: "+id+" não encontrado!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Ponto turístico de ID: "+id+" não encontrado!"));
     }
 
     @Transactional

@@ -1,10 +1,10 @@
 package io.github.parqueubajara.api.service;
 
 import io.github.parqueubajara.api.dto.update.RestaurantUpdateDTO;
+import io.github.parqueubajara.api.exception.ResourceNotFoundException;
 import io.github.parqueubajara.api.mapper.RestaurantMapper;
 import io.github.parqueubajara.api.model.Restaurant;
 import io.github.parqueubajara.api.repository.RestaurantRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +29,7 @@ public class RestaurantService {
     @Transactional(readOnly = true)
     public Restaurant findById(UUID id){
         return findByIdOptional(id)
-                .orElseThrow(() -> new EntityNotFoundException("Restaurante de ID: "+id+" encontrado!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Restaurante de ID: "+id+" encontrado!"));
     }
 
     @Transactional(readOnly = true)

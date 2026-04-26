@@ -1,10 +1,10 @@
 package io.github.parqueubajara.api.service;
 
 import io.github.parqueubajara.api.dto.response.PhotoResponseDTO;
+import io.github.parqueubajara.api.exception.ResourceNotFoundException;
 import io.github.parqueubajara.api.mapper.PhotoMapper;
 import io.github.parqueubajara.api.model.Photo;
 import io.github.parqueubajara.api.repository.PhotoRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +32,7 @@ public class PhotoService {
     @Transactional(readOnly = true)
     public Photo findById(UUID id){
         return findByIdOptional(id)
-                .orElseThrow(() -> new EntityNotFoundException("Photo de ID: "+ id + " não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Photo de ID: "+ id + " não encontrado"));
     }
 
     @Transactional(readOnly = true)

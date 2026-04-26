@@ -1,10 +1,10 @@
 package io.github.parqueubajara.api.service;
 
 import io.github.parqueubajara.api.dto.update.ContactsUpdateDTO;
+import io.github.parqueubajara.api.exception.ResourceNotFoundException;
 import io.github.parqueubajara.api.mapper.ContactsMapper;
 import io.github.parqueubajara.api.model.Contacts;
 import io.github.parqueubajara.api.repository.ContactsRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +29,7 @@ public class ContactsService {
     @Transactional(readOnly = true)
     public Contacts findById(UUID id){
         return findByIdOptional(id)
-                .orElseThrow(() -> new EntityNotFoundException("Contato com o ID: "+ id +" não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Contato com o ID: "+ id +" não encontrado"));
     }
 
     @Transactional(readOnly = true)

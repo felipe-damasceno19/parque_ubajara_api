@@ -1,10 +1,10 @@
 package io.github.parqueubajara.api.service;
 
 import io.github.parqueubajara.api.dto.update.AirportUpdateDTO;
+import io.github.parqueubajara.api.exception.ResourceNotFoundException;
 import io.github.parqueubajara.api.mapper.AirportMapper;
 import io.github.parqueubajara.api.model.Airport;
 import io.github.parqueubajara.api.repository.AirportRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +29,7 @@ public class AirportService {
     @Transactional(readOnly = true)
     public Airport findById(UUID id){
         return findByIdOptional(id)
-                .orElseThrow(() -> new EntityNotFoundException("Aeroporto de ID: "+ id +" não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Aeroporto de ID: "+ id +" não encontrado"));
     }
 
     @Transactional(readOnly = true)

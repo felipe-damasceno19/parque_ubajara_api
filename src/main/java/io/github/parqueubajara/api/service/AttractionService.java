@@ -1,11 +1,11 @@
 package io.github.parqueubajara.api.service;
 
 import io.github.parqueubajara.api.dto.update.AttractionUpdateDTO;
+import io.github.parqueubajara.api.exception.ResourceNotFoundException;
 import io.github.parqueubajara.api.mapper.AttractionMapper;
 import io.github.parqueubajara.api.model.Attraction;
 import io.github.parqueubajara.api.model.enums.AttractionType;
 import io.github.parqueubajara.api.repository.AttractionRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,7 +30,7 @@ public class AttractionService {
     @Transactional(readOnly = true)
     public Attraction findById(UUID id) {
         return findByIdOptional(id)
-                .orElseThrow(() -> new EntityNotFoundException("Atração com ID: " + id + " não encontrada!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Atração com ID: " + id + " não encontrada!"));
     }
 
     @Transactional(readOnly = true)

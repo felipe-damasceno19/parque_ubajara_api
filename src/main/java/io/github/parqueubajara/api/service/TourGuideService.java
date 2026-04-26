@@ -1,10 +1,10 @@
 package io.github.parqueubajara.api.service;
 
 import io.github.parqueubajara.api.dto.update.TourGuideUpdateDTO;
+import io.github.parqueubajara.api.exception.ResourceNotFoundException;
 import io.github.parqueubajara.api.mapper.TourGuideMapper;
 import io.github.parqueubajara.api.model.TourGuide;
 import io.github.parqueubajara.api.repository.TourGuideRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +29,7 @@ public class TourGuideService {
     @Transactional(readOnly = true)
     public TourGuide findById(UUID id){
         return findByIdOptional(id)
-                .orElseThrow(() -> new EntityNotFoundException("Guia de ID: "+ id +" não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Guia de ID: "+ id +" não encontrado"));
     }
 
     @Transactional(readOnly = true)
