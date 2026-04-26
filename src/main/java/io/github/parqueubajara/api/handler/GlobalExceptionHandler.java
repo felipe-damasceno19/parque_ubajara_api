@@ -73,4 +73,15 @@ public class GlobalExceptionHandler {
                         "Arquivo inválido", ex.getMessage(), request.getRequestURI())
         );
     }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<StandardError> handleIOException(IOException ex, HttpServletRequest request){
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        return ResponseEntity.status(status).body(
+                new StandardError(LocalDateTime.now(), status.value(),
+                            "Erro ao processar arquivo", "Não foi possível processar o arquivo enviado",
+                                  request.getRequestURI())
+                );
+    }
 }
