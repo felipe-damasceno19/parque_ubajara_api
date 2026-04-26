@@ -6,6 +6,7 @@ import io.github.parqueubajara.api.dto.update.EventUpdateDTO;
 import io.github.parqueubajara.api.mapper.EventMapper;
 import io.github.parqueubajara.api.model.Event;
 import io.github.parqueubajara.api.service.EventService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/events")
 @RequiredArgsConstructor
+@Tag(name = "Events", description = "Gerenciamento dos eventos")
 public class EventController implements GenericController{
 
     private final EventService service;

@@ -1,7 +1,14 @@
 package io.github.parqueubajara.api.controller;
 
+import io.github.parqueubajara.api.dto.response.ErrorResponseDTO;
 import io.github.parqueubajara.api.dto.response.PhotoResponseDTO;
 import io.github.parqueubajara.api.service.PhotoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,9 +22,22 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/photos")
 @RequiredArgsConstructor
+@Tag(name = "Photos", description = "Upload e remoção de fotos via AWS S3")
 public class PhotoController {
 
     private final PhotoService service;
+
+    @Operation(
+            summary = "Upload de foto",
+            description = "Envia imagem para o AWS S3 e salva a URL no banco. " +
+                    "Aceita JPEG, PNG e WEBP com tamanho máximo de 5MB"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Foto enviada com sucesso",
+                    content = @Content(schema = @Schema(implementation = PhotoResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Arquivo inválido",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+    })
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PhotoResponseDTO> upload(
@@ -34,6 +54,12 @@ public class PhotoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
+    @Operation(summary = "Deletar foto", description = "Remove a foto do S3 e do banco pelo ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Deletada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Foto não encontrada",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id){
         service.delete(id);

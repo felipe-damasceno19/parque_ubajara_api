@@ -6,6 +6,7 @@ import io.github.parqueubajara.api.dto.update.TourGuideUpdateDTO;
 import io.github.parqueubajara.api.mapper.TourGuideMapper;
 import io.github.parqueubajara.api.model.TourGuide;
 import io.github.parqueubajara.api.service.TourGuideService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/tour-guides")
 @RequiredArgsConstructor
+@Tag(name = "Tour Guides", description = "Gerenciamento dos guias turísticos")
 public class TourGuideController implements GenericController {
 
     private final TourGuideService service;

@@ -6,6 +6,7 @@ import io.github.parqueubajara.api.dto.update.RestaurantUpdateDTO;
 import io.github.parqueubajara.api.mapper.RestaurantMapper;
 import io.github.parqueubajara.api.model.Restaurant;
 import io.github.parqueubajara.api.service.RestaurantService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/restaurants")
 @RequiredArgsConstructor
+@Tag(name = "Restaurants", description = "Gerenciamento dos restaurantes")
 public class RestaurantController implements GenericController {
 
     private final RestaurantService service;

@@ -7,6 +7,7 @@ import io.github.parqueubajara.api.mapper.HostPointMapper;
 import io.github.parqueubajara.api.model.HostPoint;
 import io.github.parqueubajara.api.model.enums.HostType;
 import io.github.parqueubajara.api.service.HostPointService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/host-points")
 @RequiredArgsConstructor
+@Tag(name = "Host Points", description = "Gerenciamento das hospedagens")
 public class HostPointController implements GenericController {
 
     private final HostPointService service;

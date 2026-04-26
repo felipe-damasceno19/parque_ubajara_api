@@ -7,6 +7,7 @@ import io.github.parqueubajara.api.mapper.AttractionMapper;
 import io.github.parqueubajara.api.model.Attraction;
 import io.github.parqueubajara.api.model.enums.AttractionType;
 import io.github.parqueubajara.api.service.AttractionService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/attractions")
 @RequiredArgsConstructor
+@Tag(name = "Attractions", description = "Gerenciamento dos atrativos turísticos")
 public class AttractionController implements GenericController{
 
     private final AttractionService service;

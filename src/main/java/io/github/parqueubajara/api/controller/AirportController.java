@@ -6,6 +6,7 @@ import io.github.parqueubajara.api.dto.update.AirportUpdateDTO;
 import io.github.parqueubajara.api.mapper.AirportMapper;
 import io.github.parqueubajara.api.model.Airport;
 import io.github.parqueubajara.api.service.AirportService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/airports")
 @RequiredArgsConstructor
+@Tag(name = "Airports", description = "Aeroportos próximos a Ubajara")
 public class AirportController implements GenericController {
 
     private final AirportService service;

@@ -11,6 +11,7 @@ import io.github.parqueubajara.api.mapper.ContactsMapper;
 import io.github.parqueubajara.api.model.Contacts;
 import io.github.parqueubajara.api.model.Restaurant;
 import io.github.parqueubajara.api.service.ContactsService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/contacts")
 @RequiredArgsConstructor
+@Tag(name = "Contacts", description = "Contatos úteis para turistas")
 public class ContactsController implements GenericController {
 
     private final ContactsService service;

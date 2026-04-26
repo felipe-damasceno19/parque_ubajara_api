@@ -6,6 +6,7 @@ import io.github.parqueubajara.api.dto.update.UserUpdateDTO;
 import io.github.parqueubajara.api.mapper.UserMapper;
 import io.github.parqueubajara.api.model.User;
 import io.github.parqueubajara.api.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
+@Tag(name = "Users", description = "Gerenciamento de usuários")
 public class UserController implements GenericController{
 
     private final UserService service;

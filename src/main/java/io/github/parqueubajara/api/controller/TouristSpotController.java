@@ -6,6 +6,7 @@ import io.github.parqueubajara.api.dto.update.TouristSpotUpdateDTO;
 import io.github.parqueubajara.api.mapper.TouristSpotMapper;
 import io.github.parqueubajara.api.model.TouristSpot;
 import io.github.parqueubajara.api.service.TouristSpotService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/tourist-spots")
 @RequiredArgsConstructor
+@Tag(name = "Tourist Spots", description = "Gerenciamento dos pontos turísticos")
 public class TouristSpotController {
 
     private final TouristSpotService service;
