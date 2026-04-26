@@ -1,5 +1,6 @@
 package io.github.parqueubajara.api.handler;
 
+import io.github.parqueubajara.api.exception.InvalidFileException;
 import io.github.parqueubajara.api.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -59,6 +61,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).body(
                 new StandardError(LocalDateTime.now(), status.value(),
                         "Erro interno", "Erro inesperado no servidor", request.getRequestURI())
+        );
+    }
+
+    @ExceptionHandler(InvalidFileException.class)
+    public ResponseEntity<StandardError> hasInvalidFile(InvalidFileException ex, HttpServletRequest request){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        return ResponseEntity.status(status).body(
+                new StandardError(LocalDateTime.now(), status.value(),
+                        "Arquivo inválido", ex.getMessage(), request.getRequestURI())
         );
     }
 }

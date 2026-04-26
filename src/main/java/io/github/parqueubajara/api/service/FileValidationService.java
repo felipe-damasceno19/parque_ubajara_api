@@ -1,5 +1,6 @@
 package io.github.parqueubajara.api.service;
 
+import io.github.parqueubajara.api.exception.InvalidFileException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,17 +25,17 @@ public class FileValidationService {
 
     private void validateSize(MultipartFile file){
         if(file.isEmpty()){
-            throw new IllegalArgumentException("O arquivo não pode estar vazio");
+            throw new InvalidFileException("O arquivo não pode estar vazio");
         }
 
         if(file.getSize() > MAX_FILE_SIZE){
-            throw new IllegalArgumentException("O arquivo excede o tamanho permitido");
+            throw new InvalidFileException("O arquivo excede o tamanho permitido");
         }
     }
 
     private void validateImageType(MultipartFile file){
         if(!ALLOWED_IMAGE_TYPES.contains(file.getContentType())){
-            throw new IllegalArgumentException("Tipo de arquivo não permitido. Permitidos: JPEG, PNG, WEBP, GIF");
+            throw new InvalidFileException("Tipo de arquivo não permitido. Permitidos: JPEG, PNG, WEBP, GIF");
         }
     }
 }
