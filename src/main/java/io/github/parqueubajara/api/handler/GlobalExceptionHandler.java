@@ -1,7 +1,8 @@
 package io.github.parqueubajara.api.handler;
 
-import io.github.parqueubajara.api.dto.response.ErrorResponseDTO;
+import io.github.parqueubajara.api.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -9,61 +10,54 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponseDTO> handleIllegalArgument(
-            IllegalArgumentException ex) {
-
-        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
-    }
-
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponseDTO> handleEntityNotFound(
-            EntityNotFoundException ex) {
-
-        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponseDTO> handleValidation(
-            MethodArgumentNotValidException ex) {
+    public ResponseEntity<ValidationErrorResponse> handleValidation(MethodArgumentNotValidException ex, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
 
-        String message = ex.getBindingResult()
+        List<ValidationErrorResponse.FieldMessage> fields = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .map(error -> error.getField() + ": " + error.getDefaultMessage())
-                .collect(Collectors.joining(", "));
+                .map(f -> new ValidationErrorResponse.FieldMessage(f.getField(), f.getDefaultMessage()))
+                .toList();
 
-        return buildResponse(HttpStatus.BAD_REQUEST, message);
+        return ResponseEntity.status(status).body(
+                new ValidationErrorResponse(LocalDateTime.now(), status.value(),
+                        "Erro de validação", fields)
+        );
     }
 
-    @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public ResponseEntity<ErrorResponseDTO> handleMaxUploadSize(
-            MaxUploadSizeExceededException ex) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<StandardError> handleNotFound(EntityNotFoundException ex, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
 
-        return buildResponse(HttpStatus.BAD_REQUEST,
-                "O arquivo excede o tamanho máximo permitido de 5MB");
+        return ResponseEntity.status(status).body(
+                new StandardError(LocalDateTime.now(), status.value(),
+                        "Não encontrado", ex.getMessage(), request.getRequestURI())
+        );
+    }
+
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<StandardError> handleMaxUploadSize(MaxUploadSizeExceededException ex, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        return ResponseEntity.status(status).body(
+                new StandardError(LocalDateTime.now(), status.value(),
+                        "Arquivo muito grando", "O arquivo excede o tamanho máximo permitido de 5MB", request.getRequestURI())
+        );
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDTO> handleGeneric(Exception ex) {
+    public ResponseEntity<StandardError> handleGeneric(Exception ex, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
-        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR,
-                "Erro interno no servidor");
-    }
-
-    private ResponseEntity<ErrorResponseDTO> buildResponse(
-            HttpStatus status, String message) {
-
-        ErrorResponseDTO error = new ErrorResponseDTO(
-                status.value(),
-                message,
-                LocalDateTime.now()
+        return ResponseEntity.status(status).body(
+                new StandardError(LocalDateTime.now(), status.value(),
+                        "Erro interno", "Erro inesperado no servidor", request.getRequestURI())
         );
-
-        return ResponseEntity.status(status).body(error);
     }
 }

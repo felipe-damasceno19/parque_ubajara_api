@@ -1,7 +1,7 @@
 package io.github.parqueubajara.api.controller;
 
-import io.github.parqueubajara.api.dto.response.ErrorResponseDTO;
 import io.github.parqueubajara.api.dto.response.PhotoResponseDTO;
+import io.github.parqueubajara.api.handler.StandardError;
 import io.github.parqueubajara.api.service.PhotoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -36,7 +36,7 @@ public class PhotoController {
             @ApiResponse(responseCode = "201", description = "Foto enviada com sucesso",
                     content = @Content(schema = @Schema(implementation = PhotoResponseDTO.class))),
             @ApiResponse(responseCode = "400", description = "Arquivo inválido",
-                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+                    content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -58,7 +58,7 @@ public class PhotoController {
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Deletada com sucesso"),
             @ApiResponse(responseCode = "404", description = "Foto não encontrada",
-                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+                    content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id){
