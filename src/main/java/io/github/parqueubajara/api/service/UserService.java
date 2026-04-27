@@ -8,6 +8,7 @@ import io.github.parqueubajara.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ public class UserService {
 
     private final UserRepository repository;
     private final UserMapper mapper;
+    private final PasswordEncoder encoder;
 
     @Transactional(readOnly = true)
     public Optional<SystemUser> findByIdOptional(UUID id){
@@ -50,6 +52,8 @@ public class UserService {
         if(repository.existsByEmail(user.getEmail())){
             throw new RuntimeException("E-mail já cadastrado");
         }
+        var password = user.getPassword();
+        user.setPassword(encoder.encode(password));
         return repository.save(user);
     }
 
