@@ -24,6 +24,6 @@ public class SecurityService {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String login = userDetails.getUsername();
-        return userService.findByUsername(login);
+        return userService.findByEmail(login);
     }
 }
