@@ -4,7 +4,7 @@ import io.github.parqueubajara.api.dto.request.UserRequestDTO;
 import io.github.parqueubajara.api.dto.response.UserResponseDTO;
 import io.github.parqueubajara.api.dto.update.UserUpdateDTO;
 import io.github.parqueubajara.api.mapper.UserMapper;
-import io.github.parqueubajara.api.model.User;
+import io.github.parqueubajara.api.model.SystemUser;
 import io.github.parqueubajara.api.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -31,19 +31,19 @@ public class UserController implements GenericController{
     @GetMapping
     public ResponseEntity<Page<UserResponseDTO>> findAll(@PageableDefault(size = 10)Pageable pageable,
                                                          @RequestParam(required = false) String username){
-        Page<User> pageEntity = service.findAll(pageable, username);
+        Page<SystemUser> pageEntity = service.findAll(pageable, username);
         return ResponseEntity.ok(pageEntity.map(mapper::toResponseDTO));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getById(@PathVariable UUID id){
-        User user = service.findById(id);
+        SystemUser user = service.findById(id);
         return ResponseEntity.ok(mapper.toResponseDTO(user));
     }
 
     @PostMapping
     public ResponseEntity<UserResponseDTO> save(@Valid @RequestBody UserRequestDTO requestDTO){
-        User user = mapper.toEntity(requestDTO);
+        SystemUser user = mapper.toEntity(requestDTO);
         service.save(user);
         URI location = generateHeaderLocation(user.getId());
 

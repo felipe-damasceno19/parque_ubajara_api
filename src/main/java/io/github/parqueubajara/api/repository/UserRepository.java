@@ -1,6 +1,6 @@
 package io.github.parqueubajara.api.repository;
 
-import io.github.parqueubajara.api.model.User;
+import io.github.parqueubajara.api.model.SystemUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,15 +10,17 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface UserRepository extends JpaRepository<SystemUser, UUID> {
 
-    Page<User> findByUsernameContainingIgnoreCase(String username, Pageable pageable);
+    Page<SystemUser> findByUsernameContainingIgnoreCase(String username, Pageable pageable);
+
+    SystemUser findByUsername(String username);
 
     boolean existsByEmail(String email);
 
     boolean existsById(UUID id);
 
-    Optional<User> findById(UUID id);
+    Optional<SystemUser> findById(UUID id);
 
-    Optional<User> findByEmail(String email);
+    Optional<SystemUser> findByEmail(String email);
 }

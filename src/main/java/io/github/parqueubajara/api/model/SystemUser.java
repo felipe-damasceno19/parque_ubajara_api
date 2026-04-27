@@ -19,7 +19,7 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class SystemUser {
 
     @EqualsAndHashCode.Include
     @Id
