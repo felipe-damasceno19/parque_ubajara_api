@@ -11,7 +11,7 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(config = CentralMapperConfig .class)
 public interface UserMapper {
-    
+
     SystemUser toEntity(UserRequestDTO requestDTO);
 
     @Mapping(source = "userRole", target = "role")
