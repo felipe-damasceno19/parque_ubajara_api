@@ -22,6 +22,11 @@ public class SecurityService {
             return null;
         }
 
+        // Verifica se é realmente um UserDetails antes de fazer o cast
+        if(!(authentication.getPrincipal() instanceof UserDetails yserDetails)){
+            return null;
+        }
+
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String login = userDetails.getUsername();
         return userService.findByEmail(login);

@@ -41,15 +41,6 @@ public class UserController implements GenericController{
         return ResponseEntity.ok(mapper.toResponseDTO(user));
     }
 
-    @PostMapping
-    public ResponseEntity<UserResponseDTO> save(@Valid @RequestBody UserRequestDTO requestDTO){
-        SystemUser user = mapper.toEntity(requestDTO);
-        service.save(user);
-        URI location = generateHeaderLocation(user.getId());
-
-        return ResponseEntity.created(location).body(mapper.toResponseDTO(user));
-    }
-
     @PatchMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable UUID id, @RequestBody @Valid UserUpdateDTO updateDTO){
         service.update(id, updateDTO);
