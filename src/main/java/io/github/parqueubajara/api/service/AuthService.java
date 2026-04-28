@@ -31,7 +31,7 @@ public class AuthService {
         user.setUsername(requestDTO.username());
         user.setEmail(requestDTO.email());
         user.setPassword(encoder.encode(requestDTO.password()));
-        user.setUserRole(Role.USER);
+        user.setUserRole(Role.ADMIN);
 
         userService.save(user);
 
