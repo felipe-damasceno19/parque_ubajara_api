@@ -53,8 +53,6 @@ public class UserService {
         if(repository.existsByEmail(user.getEmail())){
             throw new RuntimeException("E-mail já cadastrado");
         }
-        var password = user.getPassword();
-        user.setPassword(encoder.encode(password));
         return repository.save(user);
     }
 
