@@ -1,4 +1,4 @@
-package io.github.parqueubajara.api.service;
+package io.github.parqueubajara.api.service.infra;
 
 import io.github.parqueubajara.api.exception.InvalidFileException;
 import org.springframework.stereotype.Service;

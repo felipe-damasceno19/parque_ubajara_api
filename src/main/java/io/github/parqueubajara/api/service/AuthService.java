@@ -6,6 +6,7 @@ import io.github.parqueubajara.api.dto.response.AuthResponseDTO;
 import io.github.parqueubajara.api.model.SystemUser;
 import io.github.parqueubajara.api.model.enums.Role;
 import io.github.parqueubajara.api.security.CustomUserDetailsService;
+import io.github.parqueubajara.api.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

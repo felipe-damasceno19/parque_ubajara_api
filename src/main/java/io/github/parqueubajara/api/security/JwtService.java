@@ -1,4 +1,4 @@
-package io.github.parqueubajara.api.service;
+package io.github.parqueubajara.api.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

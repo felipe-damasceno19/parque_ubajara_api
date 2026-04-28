@@ -1,6 +1,5 @@
 package io.github.parqueubajara.api.security;
 
-import io.github.parqueubajara.api.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

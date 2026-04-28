@@ -5,6 +5,8 @@ import io.github.parqueubajara.api.exception.ResourceNotFoundException;
 import io.github.parqueubajara.api.mapper.PhotoMapper;
 import io.github.parqueubajara.api.model.Photo;
 import io.github.parqueubajara.api.repository.PhotoRepository;
+import io.github.parqueubajara.api.service.infra.FileValidationService;
+import io.github.parqueubajara.api.service.infra.S3StorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

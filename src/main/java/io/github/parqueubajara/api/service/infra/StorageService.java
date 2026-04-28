@@ -1,4 +1,4 @@
-package io.github.parqueubajara.api.service;
+package io.github.parqueubajara.api.service.infra;
 
 import org.springframework.web.multipart.MultipartFile;
 

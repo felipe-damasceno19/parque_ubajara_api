@@ -1,4 +1,4 @@
-package io.github.parqueubajara.api.service;
+package io.github.parqueubajara.api.service.infra;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
