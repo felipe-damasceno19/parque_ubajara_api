@@ -1,21 +1,18 @@
 package io.github.parqueubajara.api.config;
 
-import io.github.parqueubajara.api.security.CustomUserDetailsService;
+import io.github.parqueubajara.api.security.CustomAuthenticationProvider;
 import io.github.parqueubajara.api.security.JwtFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -26,14 +23,18 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final CustomAuthenticationProvider customAuthenticationProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(Customizer.withDefaults())
+                //.formLogin(Customizer.withDefaults())
+                //.oauth2Login(Customizer.withDefaults())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
@@ -44,35 +45,26 @@ public class SecurityConfig {
                                 "/swagger-ui.html"
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET,
-                                "/api/v1/tourist-spots/**",
-                                "/api/v1/attractives/**",
-                                "/api/v1/host-points/**",
-                                "/api/v1/restaurants/**",
-                                "/api/v1/events/**",
-                                "/api/v1/tour-guides/**",
-                                "/api/v1/airports/**",
-                                "/api/v1/contacts/**",
-                                "/api/v1/photos/**"
+                                "/tourist-spots/**",
+                                "/attractives/**",
+                                "/host-points/**",
+                                "/restaurants/**",
+                                "/events/**",
+                                "/tour-guides/**",
+                                "/airports/**",
+                                "/contacts/**",
+                                "/photos/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
-                .oauth2Login(Customizer.withDefaults())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(10);
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider(CustomUserDetailsService customUserDetailsService){
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(customUserDetailsService);
-        provider.setPasswordEncoder(passwordEncoder());
-        return provider;
+    public AuthenticationProvider authenticationProvider(){
+        return customAuthenticationProvider;
     }
 
     @Bean

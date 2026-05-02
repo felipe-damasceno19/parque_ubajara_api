@@ -1,5 +1,7 @@
 package io.github.parqueubajara.api.security;
 
+import io.github.parqueubajara.api.model.SystemUser;
+import io.github.parqueubajara.api.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +21,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final CustomUserDetailsService userDetailsService;
+    private final UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -35,31 +37,19 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         String token = authHeader.substring(7);
-
         String email = jwtService.extractUsername(token);
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            SystemUser user = userService.findByEmail(email);
 
-            if (jwtService.isTokenValid(token, userDetails)) {
-
-                UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities()
-                        );
-                
-                authToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
-
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+            if (jwtService.isTokenValidByEmail(token, email)) {
+                CustomAuthentication authentication = new CustomAuthentication(user);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
 
-        // 11. Passa para o próximo filtro
+        // Passa para o próximo filtro
         filterChain.doFilter(request, response);
     }
 }

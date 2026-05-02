@@ -45,7 +45,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public SystemUser findByEmail(String email){
         return repository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário com email " + email + " não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário e/ou senha incorretos!"));
     }
 
     @Transactional
