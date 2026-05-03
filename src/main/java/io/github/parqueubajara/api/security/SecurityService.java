@@ -18,17 +18,11 @@ public class SecurityService {
     public SystemUser getUserLogged(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(authentication == null || !authentication.isAuthenticated()) {
-            return null;
+        if(authentication != null && !authentication.isAuthenticated()) {
+            if (authentication instanceof CustomAuthentication customAuth) {
+                return customAuth.getUser();
+            }
         }
-
-        // Verifica se é realmente um UserDetails antes de fazer o cast
-        if(!(authentication.getPrincipal() instanceof UserDetails yserDetails)){
-            return null;
-        }
-
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String login = userDetails.getUsername();
-        return userService.findByEmail(login);
+        return null;
     }
 }

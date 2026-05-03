@@ -16,6 +16,7 @@ import java.util.List;
 public class CustomAuthentication implements Authentication {
 
     private final SystemUser user;
+    private boolean authenticated = true;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -47,12 +48,12 @@ public class CustomAuthentication implements Authentication {
 
     @Override
     public boolean isAuthenticated() {
-        return true;
+        return this.authenticated;
     }
 
     @Override
     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
-
+        this.authenticated = isAuthenticated;
     }
 
     @Override
