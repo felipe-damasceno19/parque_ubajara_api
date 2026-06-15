@@ -38,7 +38,7 @@ public class Airport extends BaseEntity {
     @Column(name = "estimated_time_minutes")
     private Integer estimatedTimeMinutes;
 
-    @Column(name = "route_description")
+    @Column(name = "route_description", columnDefinition = "TEXT")
     private String routeDescription;
 
     @OneToMany(mappedBy = "airport", cascade = CascadeType.ALL, orphanRemoval = true)
