@@ -34,7 +34,7 @@ public class TourGuide extends BaseEntity {
     @Column(name = "languages")
     private List<String> languages;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @OneToMany(mappedBy = "tourGuide", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -33,7 +33,7 @@ public class Contacts extends BaseEntity{
     @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
 
